@@ -1,6 +1,5 @@
 package com.example.bienestaranimal360.ui.screens
 
-import android.widget.Toast
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -36,9 +35,9 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -48,14 +47,13 @@ import com.example.bienestaranimal360.ui.theme.*
 
 @Composable
 fun HomeScreen() {
-    val context = LocalContext.current
     val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(bottom = 80.dp) // Space for bottom nav
+            .padding(bottom = 80.dp)
             .verticalScroll(scrollState)
     ) {
         // Header
@@ -67,9 +65,7 @@ fun HomeScreen() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable {
-                Toast.makeText(context, "Logo Clicked", Toast.LENGTH_SHORT).show()
-            }) {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { }) {
                 Surface(
                     shape = CircleShape,
                     shadowElevation = 2.dp,
@@ -99,7 +95,7 @@ fun HomeScreen() {
             }
 
             IconButton(
-                onClick = { Toast.makeText(context, "Notificaciones", Toast.LENGTH_SHORT).show() },
+                onClick = { },
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.surface, CircleShape)
                     .padding(4.dp)
@@ -108,14 +104,13 @@ fun HomeScreen() {
             }
         }
 
-        // Hero Section (Dog Image)
+        // Hero Section
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(400.dp)
                 .padding(horizontal = 24.dp)
                 .clip(RoundedCornerShape(40.dp))
-                .clickable { Toast.makeText(context, "Ver perfil de Bruno", Toast.LENGTH_SHORT).show() }
         ) {
             AsyncImage(
                 model = "https://lh3.googleusercontent.com/aida-public/AB6AXuAlSPbsNbgKtFiXnjNnlvedvL6ISWfTumy4AyUEvfh1pvVW9JP4VCmjKUwAyhRe28Bf3cLJHzel7y7UCtzn6pxyOJmmvOvwDMrUfUdxEHBtZ7eqlbLeeJ84wyTpzx-VDMtRjeN4Bsstpi1Sqc-gb4mis7kBFuIdkDPfON5UNWVqLgFjbFjxau2Gp1JQickJDgmNLQKSuR71Uw57D-5uljRNrMZ2VLclUbvkrAyIeo-t6Wa3sBakk8QoWsezOBRM39yV_FACiLOjKfM",
@@ -124,7 +119,6 @@ fun HomeScreen() {
                 modifier = Modifier.fillMaxSize()
             )
 
-            // Gradient Overlay
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -136,7 +130,6 @@ fun HomeScreen() {
                     )
             )
 
-            // Status Badge
             GlassCard(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -146,7 +139,6 @@ fun HomeScreen() {
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Pulsing Dot
                     val infiniteTransition = rememberInfiniteTransition(label = "pulse")
                     val alpha by infiniteTransition.animateFloat(
                         initialValue = 0.3f,
@@ -182,7 +174,6 @@ fun HomeScreen() {
                 }
             }
 
-            // Bottom Info
             Row(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
@@ -214,7 +205,6 @@ fun HomeScreen() {
                     )
                 }
 
-                // Age Card
                 GlassCard {
                     Column(
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
@@ -247,136 +237,34 @@ fun HomeScreen() {
                 modifier = Modifier.padding(bottom = 20.dp)
             )
 
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 // Vaccine Card
-                GlassCard(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(190.dp),
-                    onClick = { Toast.makeText(context, "Detalles Vacuna", Toast.LENGTH_SHORT).show() }
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(20.dp),
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.Top
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .background(Orange50, RoundedCornerShape(16.dp)),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(Icons.Outlined.Vaccines, null, tint = Secondary)
-                            }
-                            Text(
-                                text = "PENDIENTE",
-                                color = Secondary,
-                                fontSize = 10.sp,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier
-                                    .background(Orange100, CircleShape)
-                                    .padding(horizontal = 8.dp, vertical = 4.dp)
-                            )
-                        }
-
-                        Column {
-                            Text(
-                                text = "PRÓXIMA VACUNA",
-                                style = MaterialTheme.typography.labelSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = "12 Nov",
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(Icons.Default.Schedule, null, tint = Secondary, modifier = Modifier.size(16.dp))
-                                Spacer(modifier = Modifier.width(4.dp))
-                                Text(
-                                    text = "En 2 semanas",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = Secondary,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                        }
-                    }
-                }
+                HealthChipCard(
+                    title = "PRÓXIMA VACUNA",
+                    date = "12 Nov",
+                    statusText = "PENDIENTE",
+                    statusColor = Secondary,
+                    statusBg = Orange100,
+                    icon = Icons.Outlined.Vaccines,
+                    iconBg = Orange50,
+                    bottomText = "En 2 semanas",
+                    bottomIcon = Icons.Default.Schedule,
+                    modifier = Modifier.weight(1f)
+                )
 
                 // Parasite Card
-                GlassCard(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(190.dp),
-                    onClick = { Toast.makeText(context, "Detalles Desparasitación", Toast.LENGTH_SHORT).show() }
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(20.dp),
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.Top
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(48.dp)
-                                    .background(Teal50, RoundedCornerShape(16.dp)),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(Icons.Outlined.PestControl, null, tint = Primary)
-                            }
-                            Text(
-                                text = "OK",
-                                color = Primary,
-                                fontSize = 10.sp,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier
-                                    .background(Teal100, CircleShape)
-                                    .padding(horizontal = 12.dp, vertical = 4.dp)
-                            )
-                        }
-
-                        Column {
-                            Text(
-                                text = "DESPARASITACIÓN",
-                                style = MaterialTheme.typography.labelSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = "05 Dic",
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(Icons.Outlined.CheckCircle, null, tint = Primary, modifier = Modifier.size(16.dp))
-                                Spacer(modifier = Modifier.width(4.dp))
-                                Text(
-                                    text = "Al día",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = Primary,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                        }
-                    }
-                }
+                HealthChipCard(
+                    title = "DESPARASITACIÓN",
+                    date = "05 Dic",
+                    statusText = "OK",
+                    statusColor = Primary,
+                    statusBg = Teal100,
+                    icon = Icons.Outlined.PestControl,
+                    iconBg = Teal50,
+                    bottomText = "Al día",
+                    bottomIcon = Icons.Outlined.CheckCircle,
+                    modifier = Modifier.weight(1f)
+                )
             }
         }
 
@@ -396,7 +284,7 @@ fun HomeScreen() {
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Button(
-                    onClick = { Toast.makeText(context, "Nueva Entrada", Toast.LENGTH_SHORT).show() },
+                    onClick = { },
                     colors = ButtonDefaults.buttonColors(containerColor = Secondary),
                     shape = CircleShape
                 ) {
@@ -406,70 +294,151 @@ fun HomeScreen() {
                 }
             }
 
-            // Item 1
-            GlassCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                onClick = { Toast.makeText(context, "Ver Control de Peso", Toast.LENGTH_SHORT).show() }
+            HistoryItem(
+                title = "Control de Peso",
+                subtitle = "Clínica VetCare • Dr. Martínez",
+                value = "28.5 kg",
+                time = "Hoy",
+                icon = Icons.Outlined.MonitorWeight,
+                iconBg = Teal50,
+                iconColor = Primary
+            )
+
+            HistoryItem(
+                title = "Grooming Completo",
+                subtitle = "PetSpa Deluxe",
+                value = "-$450",
+                time = "Ayer",
+                icon = Icons.Outlined.ContentCut,
+                iconBg = Orange50,
+                iconColor = Secondary
+            )
+        }
+    }
+}
+
+@Composable
+fun HealthChipCard(
+    title: String,
+    date: String,
+    statusText: String,
+    statusColor: Color,
+    statusBg: Color,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    iconBg: Color,
+    bottomText: String,
+    bottomIcon: androidx.compose.ui.graphics.vector.ImageVector,
+    modifier: Modifier = Modifier
+) {
+    GlassCard(
+        modifier = modifier.height(185.dp) // Adjusted height
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp) // Use spacedBy instead of SpaceBetween to avoid big gaps
+        ) {
+            // Top Row: Icon and Status Pill
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
+                Box(
                     modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                        .size(40.dp)
+                        .background(iconBg, RoundedCornerShape(12.dp)),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(56.dp)
-                            .background(Teal50, RoundedCornerShape(16.dp)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(Icons.Outlined.MonitorWeight, null, tint = Primary)
-                    }
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("Control de Peso", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                        Text("Clínica VetCare • Dr. Martínez", fontSize = 12.sp, color = Color.Gray)
-                    }
-                    Column(horizontalAlignment = Alignment.End) {
-                        Text("28.5 kg", fontWeight = FontWeight.Bold)
-                        Text("Hoy", fontSize = 12.sp, color = Primary)
-                    }
+                    Icon(icon, null, tint = statusColor, modifier = Modifier.size(20.dp))
+                }
+                Surface(
+                    shape = CircleShape,
+                    color = statusBg,
+                    modifier = Modifier.width(80.dp)
+                ) {
+                    Text(
+                        text = statusText,
+                        color = statusColor,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(vertical = 4.dp),
+                        maxLines = 1
+                    )
                 }
             }
 
-            // Item 2
-            GlassCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 24.dp),
-                onClick = { Toast.makeText(context, "Ver Grooming", Toast.LENGTH_SHORT).show() }
-            ) {
-                Row(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(56.dp)
-                            .background(Orange50, RoundedCornerShape(16.dp)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(Icons.Outlined.ContentCut, null, tint = Secondary)
-                    }
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("Grooming Completo", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                        Text("PetSpa Deluxe", fontSize = 12.sp, color = Color.Gray)
-                    }
-                    Column(horizontalAlignment = Alignment.End) {
-                        Text("-$450", fontWeight = FontWeight.Bold)
-                        Text("Ayer", fontSize = 12.sp, color = Color.Gray)
-                    }
+            // Content Column
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                    fontSize = 12.sp // Slightly adjusted
+                )
+                Text(
+                    text = date,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+                Spacer(modifier = Modifier.height(2.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(bottomIcon, null, tint = statusColor, modifier = Modifier.size(14.dp))
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = bottomText,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = statusColor,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 11.sp
+                    )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun HistoryItem(
+    title: String,
+    subtitle: String,
+    value: String,
+    time: String,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    iconBg: Color,
+    iconColor: Color
+) {
+    GlassCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(52.dp)
+                    .background(iconBg, RoundedCornerShape(14.dp)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(icon, null, tint = iconColor, modifier = Modifier.size(24.dp))
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(title, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+                Text(subtitle, fontSize = 11.sp, color = Color.Gray)
+            }
+            Column(horizontalAlignment = Alignment.End) {
+                Text(value, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                Text(time, fontSize = 11.sp, color = if (time == "Hoy") iconColor else Color.Gray)
             }
         }
     }

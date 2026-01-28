@@ -112,7 +112,7 @@ fun ProfileScreen() {
                         color = MaterialTheme.colorScheme.onBackground
                     )
                     TextButton(onClick = { /* Add pet */ }) {
-                        Icon(Icons.Default.Add, contentDescription = null, size = 18.dp)
+                        Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(4.dp))
                         Text("Añadir")
                     }
